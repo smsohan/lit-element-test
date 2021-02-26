@@ -1,12 +1,51 @@
 <!doctype html>
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>&lt;my-element> Demo</title>
-    <script type="module" src="../chat-message.js"></script>
-  </head>
-  <body>
-    <chat-message senderAvatar="J" senderDisplayName="Jay" createdOn="03:00 PM Mon, Jan 2, 2021" content="hello world" status="read"/>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>&lt;my-element> Demo</title>
+  <script type="module" src="../chat-thread.js"></script>
+</head>
+
+<body>
+
+  <chat-thread></chat-thread>  
+
+  <script>
+    const thread = document.querySelector("chat-thread");
+    thread.messages = [
+      {
+        senderAvatar: 'D',
+        senderDisplayName: "David",
+        createdOn: '10:30AM',
+        content: "Hello World",
+        direction: "incoming"
+      },
+      {
+        createdOn: '10:31AM',
+        content: "Hi David",
+        status: "👁",
+        direction: "outgoing"
+      }
+    ];
+
+    thread.messages.push({
+      senderAvatar: 'D',
+      senderDisplayName: "David",
+      createdOn: '10:32AM',
+      content: "Good morning Maya",
+      direction: "incoming"
+    });
+
+    thread.messages.push({
+      createdOn: '10:32AM',
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+      direction: "outgoing",
+      status: "✓"
+    });
+
+  </script>
+</body>
+
 </html>

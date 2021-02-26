@@ -8,38 +8,49 @@ import { LitElement, html, customElement, property, css } from 'lit-element';
 let ChatMessage = class ChatMessage extends LitElement {
     constructor() {
         super(...arguments);
-        this.senderDisplayName = '';
-        this.senderAvatar = '';
-        this.createdOn = '';
-        this.content = '';
-        this.status = '';
+        this.message = {
+            senderAvatar: '',
+            senderDisplayName: '',
+            createdOn: '',
+            content: '',
+            status: '',
+            direction: ''
+        };
     }
     render() {
-        return html `
-    <div class="root">
-      <div class="avatar-container">
+        let avatar = html ``;
+        if (this.message.senderAvatar) {
+            avatar = html `<div class="avatar-container">
         <div class="avatar">
-          ${this.senderAvatar}
+          ${this.message.senderAvatar}
         </div>
-      </div>
-
+      </div>`;
+        }
+        return html `
+    <div class="root ${this.message.direction}">
+      ${avatar}
       <div class="message-container">
         <header>
-          <div class="sender-display-name">
-            ${this.senderDisplayName}
-          </div>
+          ${this.message.direction == 'incoming' ?
+            html `
+            <div class="sender-display-name">
+              ${this.message.senderDisplayName}
+            </div>
+            ` :
+            ''}
+          
           <div class="created-on">
-            ${this.createdOn}
+            ${this.message.createdOn}
           </div>
         </header>
 
         <div class="content">
-          ${this.content}
+          ${this.message.content}
         </div>
       </div>
 
       <div class="status">
-        ${this.status}
+        ${this.message.status}
       </div>
 
     </div>
@@ -48,15 +59,32 @@ let ChatMessage = class ChatMessage extends LitElement {
 };
 ChatMessage.styles = css `
     :host {
-      display: block;
-      width: 100%;
+      display: flex;
     }
 
     .root{
       display: flex;
-      align-items: center;
+      align-items: center;      
+      margin: 0.5rem 0;
     }
 
+    .root.outgoing{
+      margin-left: 20%;
+      justify-content: flex-end;
+    }
+
+    .root.outgoing .message-container{
+      background-color: lightblue;
+    }
+
+git     .root.incoming{
+      margin-right: 20%;
+    }
+
+    .message-container{
+      background-color: lightgoldenrodyellow;
+    }
+        
     .avatar-container{
       width: 3rem;
       height: 3rem;
@@ -75,6 +103,8 @@ ChatMessage.styles = css `
     .message-container{
       flex: 2;
       margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
     }
 
     .sender-display-name{
@@ -84,23 +114,16 @@ ChatMessage.styles = css `
     .created-on{
       color: grey;
     }
+
+    .content{
+      word-break: break-word;
+    }
+
     
   `;
 __decorate([
-    property()
-], ChatMessage.prototype, "senderDisplayName", void 0);
-__decorate([
-    property()
-], ChatMessage.prototype, "senderAvatar", void 0);
-__decorate([
-    property()
-], ChatMessage.prototype, "createdOn", void 0);
-__decorate([
-    property()
-], ChatMessage.prototype, "content", void 0);
-__decorate([
-    property()
-], ChatMessage.prototype, "status", void 0);
+    property({ type: Object })
+], ChatMessage.prototype, "message", void 0);
 ChatMessage = __decorate([
     customElement('chat-message')
 ], ChatMessage);

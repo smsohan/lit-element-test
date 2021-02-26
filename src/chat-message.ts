@@ -1,18 +1,35 @@
-import { LitElement, html, customElement, property, css } from 'lit-element';
+import { LitElement, html, customElement, property, css, TemplateResult } from 'lit-element';
 
 @customElement('chat-message')
 export class ChatMessage extends LitElement {
   static styles = css`
     :host {
-      display: block;
-      width: 100%;
+      display: flex;
     }
 
     .root{
       display: flex;
-      align-items: center;
+      align-items: center;      
+      margin: 0.5rem 0;
     }
 
+    .root.outgoing{
+      margin-left: 20%;
+      justify-content: flex-end;
+    }
+
+    .root.outgoing .message-container{
+      background-color: lightblue;
+    }
+
+git     .root.incoming{
+      margin-right: 20%;
+    }
+
+    .message-container{
+      background-color: lightgoldenrodyellow;
+    }
+        
     .avatar-container{
       width: 3rem;
       height: 3rem;
@@ -31,6 +48,8 @@ export class ChatMessage extends LitElement {
     .message-container{
       flex: 2;
       margin-right: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
     }
 
     .sender-display-name{
@@ -40,50 +59,61 @@ export class ChatMessage extends LitElement {
     .created-on{
       color: grey;
     }
+
+    .content{
+      word-break: break-word;
+    }
+
     
   `;
 
-  @property()
-  senderDisplayName = '';
-
-  @property()
-  senderAvatar = '';
-
-  @property()
-  createdOn = '';
-
-  @property()
-  content = '';
-
-  @property()
-  status = '';
+  @property({type: Object})
+  message = {
+    senderAvatar: '',
+    senderDisplayName: '',
+    createdOn: '',
+    content: '',
+    status: '',
+    direction: ''
+  }
 
   render() {
-    return html`
-    <div class="root">
-      <div class="avatar-container">
-        <div class="avatar">
-          ${this.senderAvatar}
-        </div>
-      </div>
+    let avatar: TemplateResult = html``
 
+    if(this.message.senderAvatar){
+      avatar = html`<div class="avatar-container">
+        <div class="avatar">
+          ${this.message.senderAvatar}
+        </div>
+      </div>`
+    }  
+    
+    return html`
+    <div class="root ${this.message.direction}">
+      ${avatar}
       <div class="message-container">
         <header>
-          <div class="sender-display-name">
-            ${this.senderDisplayName}
-          </div>
+          ${this.message.direction == 'incoming' ? 
+            html`
+            <div class="sender-display-name">
+              ${this.message.senderDisplayName}
+            </div>
+            ` :
+            ''
+          }
+          
           <div class="created-on">
-            ${this.createdOn}
+            ${this.message.createdOn}
           </div>
         </header>
 
         <div class="content">
-          ${this.content}
+          ${this.message.content}
         </div>
       </div>
 
       <div class="status">
-        ${this.status}
+        ${this.message.status}
       </div>
 
     </div>

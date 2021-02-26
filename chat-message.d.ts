@@ -1,12 +1,15 @@
-import { LitElement } from 'lit-element';
+import { LitElement, TemplateResult } from 'lit-element';
 export declare class ChatMessage extends LitElement {
     static styles: import("lit-element").CSSResult;
-    senderDisplayName: string;
-    senderAvatar: string;
-    createdOn: string;
-    content: string;
-    status: string;
-    render(): import("lit-element").TemplateResult;
+    message: {
+        senderAvatar: string;
+        senderDisplayName: string;
+        createdOn: string;
+        content: string;
+        status: string;
+        direction: string;
+    };
+    render(): TemplateResult;
 }
 declare global {
     interface HTMLElementTagNameMap {
