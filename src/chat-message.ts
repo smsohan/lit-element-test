@@ -19,22 +19,23 @@ export class ChatMessage extends LitElement {
     }
 
     .root.outgoing .message-container{
-      background-color: lightblue;
+      background-color: var(--chat-message-container-outgoing--bgcolor, lightblue);
     }
 
-git     .root.incoming{
+    .root.incoming{
       margin-right: 20%;
     }
 
     .message-container{
-      background-color: lightgoldenrodyellow;
+      background-color: var(--chat-message-container-incoming--bgcolor, lightyellow);
     }
         
     .avatar-container{
       width: 3rem;
       height: 3rem;
       border-radius: 50%;
-      background-color: purple;
+      background-color: var(--chat-message-avatar-bgcolor, purple);
+      color: var(--chat-message-avatar-color, white);
       display: flex;
       justify-content: center;
       align-items: center;
